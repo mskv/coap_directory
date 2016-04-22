@@ -1,0 +1,2 @@
+defmodule CoapDirectory do
+end
