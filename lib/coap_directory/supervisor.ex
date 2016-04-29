@@ -9,7 +9,8 @@ defmodule CoapDirectory.Supervisor do
 
   def init([]) do
     children = [
-      worker(Coap.Storage, [[], []])
+      worker(Coap.Storage, [[], []]),
+      supervisor(CoapDirectory.ObserverSupervisor, [])
     ]
 
     supervise(children, strategy: :one_for_one)
