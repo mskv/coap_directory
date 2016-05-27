@@ -12,13 +12,14 @@ defmodule CoapDirectory.Mixfile do
 
   def application do
     [
-      applications: [:logger, :gen_coap],
+      applications: [:logger, :gen_coap, :cowboy],
       mod: {CoapDirectory, []}
     ]
   end
 
   defp deps do
     [
+      {:cowboy, github: "ninenines/cowboy", tag: "2.0.0-pre.3"},
       {:gen_coap, git: "https://github.com/gotthardp/gen_coap.git"},
       {:coap, git: "https://github.com/mskv/coap.git"}
     ]
