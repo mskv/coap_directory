@@ -18,7 +18,7 @@ defmodule CoapDirectory.Observer do
   end
 
   def handle_info({:coap_notify, _pid, :undefined, _code, _content}, target_pid) do
-    {:stop, :normal. target_pid}
+    {:stop, :normal, target_pid}
   end
 
   def handle_info({:coap_notify, _pid, _n, _code, content}, target_pid) do
