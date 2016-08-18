@@ -12,7 +12,7 @@ defmodule CoapDirectory.Mixfile do
 
   def application do
     [
-      applications: [:logger, :gen_coap, :cowboy],
+      applications: [:logger, :gen_coap, :cowboy, :httpoison],
       mod: {CoapDirectory, []}
     ]
   end
@@ -21,7 +21,9 @@ defmodule CoapDirectory.Mixfile do
     [
       {:cowboy, github: "ninenines/cowboy", tag: "2.0.0-pre.3"},
       {:gen_coap, git: "https://github.com/gotthardp/gen_coap.git"},
-      {:coap, git: "https://github.com/mskv/coap.git"}
+      {:coap, git: "https://github.com/mskv/coap.git"},
+      {:httpoison, "~> 0.9.0"},
+      {:poison, "~> 2.0"}
     ]
   end
 end
