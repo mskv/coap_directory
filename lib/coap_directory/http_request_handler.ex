@@ -1,6 +1,8 @@
 defmodule CoapDirectory.HttpRequestHandler do
   import Coap.Records
   alias CoapDirectory.Client
+  alias CoapDirectory.ObservationResponderSupervisor
+  alias CoapDirectory.ObserverSupervisor
 
   def init(req, _options) do
     {response_code, response_body} = handle_request(req)
@@ -14,13 +16,9 @@ defmodule CoapDirectory.HttpRequestHandler do
 
   defp handle_request(req) do
     case :cowboy_req.header("observe", req) do
-      "start" -> start_observation(req)
-      _ -> forward_request(req)
+      :undefined -> forward_request(req)
+      callback_url -> start_observation(req, callback_url)
     end
-  end
-
-  defp start_observation(req) do
-    {200, "observation started"}
   end
 
   defp forward_request(req) do
@@ -29,6 +27,14 @@ defmodule CoapDirectory.HttpRequestHandler do
         {:ok, _response_type, {:coap_content, _etag, _max_age, _format, payload}} = Task.await(task)
         {200, payload}
       :not_found -> {404, "not found"}
+    end
+  end
+
+  defp start_observation(req, callback_url) do
+    {:ok, responder_pid} = ObservationResponderSupervisor.start_observation_responder(callback_url)
+    case ObserverSupervisor.start_observer(extract_path(req), responder_pid) do
+      {:ok, _observer_pid} -> {200, "observation started"}
+      {:error, :not_found} -> {404, "not found"}
     end
   end
 
