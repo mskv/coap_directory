@@ -24,3 +24,9 @@ iex(6)> flush()
 "switches/1 off"
 :ok
 ```
+
+To see it hooked up to the browser visit [CoapWebserver](https://github.com/mskv/coap_webserver).
+
+Related blogposts:
+  - [part 1](http://monterail.com/blog/2016/iot-with-elixir-and-coap-part-1-example-on-how-to-easily-prototype-and-build-an-iot-platform/)
+  - [part 2](http://monterail.com/blog/2016/iot-with-elixir-and-coap-part-2-example-on-how-to-easily-prototype-and-build-an-iot-platform/)
